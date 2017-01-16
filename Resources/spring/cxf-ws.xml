@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:cxf="http://camel.apache.org/schema/cxf" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd">
+
+	
+	<!-- Loglardaki XML'ler formatli sekilde gorunsun -->
+	<bean id="abstractLoggingInterceptor" abstract="true">
+		<property name="prettyLogging" value="true" />
+	</bean>
+
+	<!-- Response'larin loglanmasi icin CXF interceptor'u-->
+	<bean id="loggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor" parent="abstractLoggingInterceptor"/>
+
+	<!-- Request'lerin loglanmasi icin CXF interceptor'u -->
+	<bean id="loggingInInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor" parent="abstractLoggingInterceptor"/>
+
+	
+	<cxf:cxfEndpoint 	id="exampleServiceEndpointBean" 
+						xmlns:ns="http://service.example.j32bit.com/example"
+						address="/example"
+						wsdlURL="WSDL/ExampleService.wsdl" 
+						serviceClass="com.j32bit.example.service.example.ExampleService"
+						serviceName="ns:ExampleServiceService"
+						endpointName="ns:ExampleService"
+						loggingFeatureEnabled="true">
+							<cxf:outInterceptors>
+								<ref bean="loggingOutInterceptor" />
+							</cxf:outInterceptors>
+							<cxf:inInterceptors>
+								<ref bean="loggingInInterceptor" />
+							</cxf:inInterceptors>
+						</cxf:cxfEndpoint>
+</beans>

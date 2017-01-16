@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="ExampleServiceService"
+	targetNamespace="http://service.example.j32bit.com/example" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:tns="http://service.example.j32bit.com/example" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			targetNamespace="http://service.example.j32bit.com/example">
+			<xsd:complexType name="getFullNameRequest">
+				<xsd:sequence>
+					<xsd:element name="Name" type="xsd:string"></xsd:element>
+					<xsd:element name="Surname" type="xsd:string"></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="getFullNameResponse">
+				<xsd:sequence>
+					<xsd:element name="fullName" type="xsd:string"></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="getFullNameRequest">
+		<wsdl:part name="getFullNameRequest" type="tns:getFullNameRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getFullNameResponse">
+		<wsdl:part name="getFullNameResponse" type="tns:getFullNameResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="ExampleService">
+		<wsdl:operation name="getFullName">
+			<wsdl:input message="tns:getFullNameRequest"></wsdl:input>
+			<wsdl:output message="tns:getFullNameResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="ExampleServiceServiceSoapBinding"
+  		type="tns:ExampleService">
+
+  		<soap:binding style="document"
+  			transport="http://schemas.xmlsoap.org/soap/http" />
+  		<wsdl:operation name="getFullName">
+  			<soap:operation
+  				soapAction="http://services.pos.com/geniuscrmbroker/getFullName" />
+  			<wsdl:input>
+  				<soap:body use="literal" />
+  			</wsdl:input>
+  			<wsdl:output>
+  				<soap:body use="literal" />
+  			</wsdl:output>
+  		</wsdl:operation>
+  
+  	</wsdl:binding>
+	
+	
+	<wsdl:service name="ExampleServiceService">
+		<wsdl:port name="ExampleService" binding="tns:ExampleServiceServiceSoapBinding">
+			<soap:address
+				location="http://localhost:8080/ExmapleService/services/ExampleService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
