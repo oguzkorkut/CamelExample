@@ -9,12 +9,24 @@
 
 	<!-- Apache Camel Route Configuration -->
 	<camelContext xmlns="http://camel.apache.org/schema/spring">
+	
+		<propertyPlaceholder id="placeholder" location="classpath:configuration/sql.properties"/>
+	
 		<route id="exampleOperationRouter">
 			<from uri="cxf:bean:exampleServiceEndpointBean" />
 			<choice>
 				<when>
 					<simple>${in.header.operationName} == 'getFullName'</simple>
 					<to uri="bean:exampleService?method=getFullName" />
+				</when>
+				
+				<when>
+					<simple>${in.header.operationName} == 'newOrder'</simple>
+					 <transform>
+				        <method ref="orderBean" method="generateOrder"/>
+				     </transform>
+				     <to uri="sql:{{sql.insertOrder}}"/>
+					 <to uri="bean:exampleService?method=newOrder" />
 				</when>
 				
 				<otherwise>

@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 
 import com.j32bit.example.service.example.GetFullNameRequest;
 import com.j32bit.example.service.example.GetFullNameResponse;
+import com.j32bit.example.service.example.NewOrderRequest;
+import com.j32bit.example.service.example.NewOrderResponse;
 
 public class ExampleServiceImpl implements IExampleService {
 	
@@ -19,5 +21,13 @@ public class ExampleServiceImpl implements IExampleService {
 		logger.info(fullName);
 		response.setFullName(fullName);
 		return response;
+	}
+
+	@Override
+	public NewOrderResponse newOrder(NewOrderRequest newOrderRequest) {
+		NewOrderResponse newOrderResponse = new NewOrderResponse();
+		
+		newOrderResponse.setResult(true);
+		return newOrderResponse;
 	}
 }

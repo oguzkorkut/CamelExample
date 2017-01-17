@@ -10,6 +10,8 @@
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-extension-jaxws.xml" />
 	
+	
+	<import resource="classpath:spring/datasource.xml" />
 	<!-- Endpoints to be used in Camel routes -->
 	<import resource="classpath:spring/exampleService.xml" />
 	

@@ -18,6 +18,19 @@
 					<xsd:element name="fullName" type="xsd:string"></xsd:element>
 				</xsd:sequence>
 			</xsd:complexType>
+			<xsd:complexType name="newOrderRequest">
+				<xsd:sequence>
+					<xsd:element name="id" type="xsd:int"></xsd:element>
+					<xsd:element name="item" type="xsd:string"></xsd:element>
+					<xsd:element name="amount" type="xsd:string"></xsd:element>
+					<xsd:element name="description" type="xsd:string"></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="newOrderResponse">
+				<xsd:sequence>
+					<xsd:element name="result" type="xsd:boolean"></xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
 		</xsd:schema>
 	</wsdl:types>
 
@@ -27,10 +40,20 @@
 	<wsdl:message name="getFullNameResponse">
 		<wsdl:part name="getFullNameResponse" type="tns:getFullNameResponse"></wsdl:part>
 	</wsdl:message>
+	<wsdl:message name="newOrderRequest">
+		<wsdl:part name="newOrderRequest" type="tns:newOrderRequest"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="newOrderResponse">
+		<wsdl:part name="newOrderResponse" type="tns:newOrderResponse"></wsdl:part>
+	</wsdl:message>
 	<wsdl:portType name="ExampleService">
 		<wsdl:operation name="getFullName">
 			<wsdl:input message="tns:getFullNameRequest"></wsdl:input>
 			<wsdl:output message="tns:getFullNameResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="newOrder">
+			<wsdl:input message="tns:newOrderRequest"></wsdl:input>
+			<wsdl:output message="tns:newOrderResponse"></wsdl:output>
 		</wsdl:operation>
 	</wsdl:portType>
 	
@@ -42,6 +65,17 @@
   		<wsdl:operation name="getFullName">
   			<soap:operation
   				soapAction="http://services.pos.com/geniuscrmbroker/getFullName" />
+  			<wsdl:input>
+  				<soap:body use="literal" />
+  			</wsdl:input>
+  			<wsdl:output>
+  				<soap:body use="literal" />
+  			</wsdl:output>
+  		</wsdl:operation>
+  		
+  		<wsdl:operation name="newOrder">
+  			<soap:operation
+  				soapAction="http://services.pos.com/geniuscrmbroker/newOrder" />
   			<wsdl:input>
   				<soap:body use="literal" />
   			</wsdl:input>
